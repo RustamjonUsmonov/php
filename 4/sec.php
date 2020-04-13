@@ -31,9 +31,9 @@ function control($sent_no_num,$weights_arr){
     $data=array();
     $temp=array();
     for ($l=0;$l<count($sent_no_num);$l++){
-        array_push($temp,$sent_no_num[$l]);
+         array_push($temp,$sent_no_num[$l]);
         array_push($temp,$counter[$l]);
-        array_push($temp,($weights_arr[$l]/array_sum($weights_arr)));
+        array_push($temp,($counter[$l]/array_sum($counter)));
 
         array_push($data,array_combine($keys,$temp));
         $temp=array();
