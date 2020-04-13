@@ -39,4 +39,4 @@ $res=conv($str);
 echo "Converted string: $res[0] <br/> Changes: $res[1]";
 }
  ?><br/>
-<a href="index.html">Home</a>
+<a href="index.php">Home</a>
