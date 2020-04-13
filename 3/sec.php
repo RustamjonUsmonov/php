@@ -9,9 +9,9 @@ $init=count($arr);// saving the number of sentences given by user
 
 for ($m=0;$m<$init;$m++)
 {
-    $ns=explode(" ",$arr[$m]);//dividing sentences into words and pushing to array
-    $re=array_reverse($ns);// reversing arrays of words
-    $impl = implode(' ',$re); //converting back to string, in order to get reversed sentences
+     $ns=explode(" ",$arr[$m]);//dividing sentences into words and pushing to array
+    shuffle($ns);// shuffle arrays of words
+    $impl = implode(' ',$ns); //converting back to string, in order to get reversed sentences
     array_push($arr,$impl);//pushing reversed sentences to array with normal sentences
 }
 //print_r($arr);echo ' arr<hr> ';
