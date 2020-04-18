@@ -4,39 +4,35 @@ if(isset($_POST["done"]))
         $str= $_POST["sometext"];
 
 //$str="Hello world";
-function conv($strochka)
+function conv($strochka,$from=0)
 {
     $line=str_split($strochka);
     $ans='';
     $counter=0;
-    for ($i=0;$i<count($line);$i++)
+    for ($i=$from;$i<count($line);$i++)
     {
         if ($line[$i]=='h')
         {
-            $line[$i]='4';
+            yield '4';
             $counter++;
-        }
-        if ($line[$i]=='l'){
-            $line[$i]='1';
+        }else  if ($line[$i]=='l'){
+            yield '1';
             $counter++;
-        }
-        if ($line[$i]=='e'){
-            $line[$i]='3';
+        }else if ($line[$i]=='e'){
+            yield '3';
             $counter++;
-        }
-        if ($line[$i]=='o'){
-            $line[$i]='0';
+        }else if ($line[$i]=='o'){
+            yield '0';
             $counter++;
-        }
+        }else{yield $line[$i];}
         $ans.=$line[$i];
-        $total_change_num=$counter;
     }
-    return array($ans,$counter);
-}
-$res=conv($str);
-//print_r( $res);
 
-echo "Converted string: $res[0] <br/> Changes: $res[1]";
+    yield '<br/>'."Total changes :".$counter;
+}
+    foreach (conv($str) as $val) {
+        echo ($val);
+    }
 }
  ?><br/>
 <a href="index.php">Home</a>
