@@ -1,18 +1,18 @@
 <?php
 
-function weighted_random_simple($values, $weights){
+function weighted_random_simple($values, $weights,$from=0){
     $count = count($values);
-    $i = 0;
+    $from = 0;
     $n = 0;
     $num = mt_rand(1, array_sum($weights));
-    while($i < $count){
-        $n += $weights[$i];
+    while($from < $count){
+        $n += $weights[$from];
         if($n >= $num){
             break;
         }
-        $i++;
+        $from++;
     }
-    return $values[$i];
+    yield $values[$from];
 }
 
 function control($sent_no_num,$weights_arr){
@@ -21,9 +21,11 @@ function control($sent_no_num,$weights_arr){
     for ($i=0;$i<10000;$i++){
         $p=weighted_random_simple($sent_no_num,$weights_arr);
 
-        for ($o=0;$o<count($sent_no_num);$o++){
-            if($p==$sent_no_num[$o] ){
-                $counter[$o]++;
+        foreach ($p as $item){
+            for ($o=0;$o<count($sent_no_num);$o++){
+                if($item==$sent_no_num[$o] ){
+                    $counter[$o]++;
+                }
             }
         }
     }
@@ -31,7 +33,7 @@ function control($sent_no_num,$weights_arr){
     $data=array();
     $temp=array();
     for ($l=0;$l<count($sent_no_num);$l++){
-         array_push($temp,$sent_no_num[$l]);
+        array_push($temp,$sent_no_num[$l]);
         array_push($temp,$counter[$l]);
         array_push($temp,($counter[$l]/array_sum($counter)));
 
