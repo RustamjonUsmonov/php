@@ -61,8 +61,4 @@ if (isset($_POST['do_send']))
     echo json_encode($final);
     echo '<hr>';
 echo control($sent_no_num,$weights_arr);
-
-
-
-
 }
