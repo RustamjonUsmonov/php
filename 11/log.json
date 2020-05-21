@@ -1,0 +1,17 @@
+[
+{
+    "type": "debug",
+    "date": "14 05 2020 13:43:49",
+    "message": "debug"
+},
+{
+    "type": "alert",
+    "date": "14 05 2020 13:43:49",
+    "message": "alert"
+},
+{
+    "type": "log",
+    "date": "14 05 2020 13:43:49",
+    "message": "logger"
+}
+]
