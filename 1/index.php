@@ -1,85 +1,67 @@
-<form method="post" action="index.php">
-    <p>Enter pattern</p>
-    <p><b>Example:</b>++++[->+++++++++++++>++++++++++++<<]>.>++.</p>
-    <input type="text" name="pattern" placeholder="Pattern">
-    <button type="submit" name="GO">GO</button>
-</form>
-
 <?php
 
-if(isset($_POST['GO'])){
-    $source=$_POST['pattern'];
-//$source = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.";
-    $source = array_values(array_filter(preg_split('//', $source)));
+include "brainfuck.html";
 
+$arr = array(0,0,0,0,0);
+$y = 0;
 
-    $chain = array(0);
-    $cell = 0;
-    $brackets = 0;
-    for ($i = 0; $i < count($source); ++$i) {
-        switch ($source[$i]) {
-            case "+" :
-                // увеличиваем значение текущей ячейки
-                $chain[$cell]++;
-                break;
-            case "-" :
-                // уменьшаем значение текущей ячейки
-                $chain[$cell]--;
-                break;
-            case "." :
-                // выводим символ
-                print chr($chain[$cell]);
-                break;
-            case "," :
-                // считать символ из STDIN
-                $chain[$cell] = ord(fgetc(STDIN));
-                break;
-            case ">" :
-                // переход к следующей ячейке
-                $cell++;
-                if (!isset($chain[$cell])) {
-                    $chain[$cell] = 0;
-                }
-                break;
-            case "<" :
-                // переход к предыдущей ячейке
-                $cell--;
-                if (!isset($chain[$cell])) {
-                    $chain[$cell] = 0;
-                }
-                break;
-            case "[" :
-                // начало цикла
-                if (!$chain[$cell]) {
-                    $brackets = 1;
-                    while ($brackets) {
-                        $i++;
-                        if ($source[$i] == "[") {
-                            // был открыт вложенный цикл
-                            $brackets++;
-                        } else if ($source[$i] == "]") {
-                            // цикл закрыт
-                            $brackets--;
-                        }
-                    }
-                }
-                break;
-            case "]" :
-                // конец цикла
-                if ($chain[$cell]) {
-                    $brackets = 1;
-                    while ($brackets) {
-                        $i--;
-                        if ($source[$i] == "]") {
-                            // был закрыт вложенный цикл
-                            $brackets++;
-                        } else if ($source[$i] == "[") {
-                            // цикл открыт
-                            $brackets--;
-                        }
-                    }
-                }
-                break;
+$num_of_words = 0;
+
+$n = 0;
+
+$code = $_REQUEST['code'];
+$param = $_REQUEST['params'];
+$p = 0;
+
+$string = "";
+
+for ($i = 0; $i < strlen($code); $i++) {
+    $n = $arr[$y];
+    if($code[$i] == ">")
+        $y++;
+    else if($code[$i] == "<")
+        $y--;
+    else if($code[$i] == "+"){
+        $n = ($n+1)%256;
+        $arr[$y] = $n;
+    }
+    else if($code[$i] == "-"){
+        $n = ($n-1)%256;
+        $arr[$y] = $n;
+    }
+    else if($code[$i] == ",") {
+        $arr[$y] = ord($param[$p]);
+        $p++;
+    }
+    else if($code[$i] == "["){
+        if ($arr[$y] == 0){
+            $b = 1;
+            while ($b != 0){
+                $i++;
+                if($code[$i] == "]")
+                    $b--;
+                else if($code[$i] == "[")
+                    $b++;
+            }
         }
     }
+    else if($code[$i] == "]"){
+        if ($arr[$y] != 0){
+            $b = 1;
+            while ($b != 0){
+                $i--;
+                if ($code[$i] == "[")
+                    $b--;
+                else if ($code[$i] == "]")
+                    $b++;
+            }
+        }
+    }
+    else if ($code[$i] == "."){
+        $num_of_words++;
+        $string = chr($arr[$y]);
+        echo $string;
+    }
+    else if($code[$i])
+        $y++;
 }
