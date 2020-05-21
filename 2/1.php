@@ -1,38 +1,34 @@
 <?php
-if(isset($_POST["done"]))
-{
-        $str= $_POST["sometext"];
 
-//$str="Hello world";
-function conv($strochka,$from=0)
-{
-    $line=str_split($strochka);
-    $ans='';
-    $counter=0;
-    for ($i=$from;$i<count($line);$i++)
-    {
-        if ($line[$i]=='h')
-        {
-            yield '4';
-            $counter++;
-        }else  if ($line[$i]=='l'){
-            yield '1';
-            $counter++;
-        }else if ($line[$i]=='e'){
-            yield '3';
-            $counter++;
-        }else if ($line[$i]=='o'){
-            yield '0';
-            $counter++;
-        }else{yield $line[$i];}
-        $ans.=$line[$i];
-    }
+$c=$_POST['text'];
 
-    yield '<br/>'."Total changes :".$counter;
-}
-    foreach (conv($str) as $val) {
-        echo ($val);
+function simple($str,$from=0)
+{
+    $count = 0;
+    for ($i = $from; $i < strlen($str); $i++) {
+        if ($str[$i] == 'h') {
+            $str[$i] = 4;
+            $count += 1;
+        } elseif ($str[$i] == 'o') {
+            $str[$i] = 0;
+            $count += 1;
+        } elseif ($str[$i] == 'l') {
+            $str[$i] = 1;
+            $count += 1;
+        }elseif ($str[$i] == 'e') {
+            $str[$i] = 3;
+            $count += 1;
+        }
+        yield $str[$i];
     }
+    echo $count."</br>";
 }
- ?><br/>
-<a href="index.php">Home</a>
+function pucs($str){
+    $string ="";
+    foreach (simple($str) as $val){
+        $string.=$val;
+    }
+    return $string;
+}
+$result=pucs($c);
+echo  $result;
