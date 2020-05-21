@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="index.php">
+    Введите текст: <br/>
+    <textarea name="str" required style="margin: 0px; width: 250px; height: 130px;"></textarea>
+    <br/>
+    Выберите Логер:<br/>
+    <input type="radio" value="file" name="log">Файл
+    <input type="radio" value="browser" name="log">Браузер
+    <br/>
+    <br/>
+    Доп параметр для браузера:
+    <br/>
+    <input type="radio" name="date" value="time">Время
+    <input type="radio" name="date" value="date_time">Дата и время
+    <input type="radio" name="date" value="off">Выкл
+    <br/> <br/>
+    Доп параметр для файла:
+    <br/>
+    <input type="text" name="filename" placeholder="введите имя файла">
+    <br/> <br/>
+    <input type="submit" name="submit" value="Отправить">
+
+</form>
+</body>
+</html>
