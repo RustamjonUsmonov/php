@@ -1,8 +1,7 @@
-<form action="1.php" method="post" >
-    <fieldset>
-        <legend>Type something</legend>
-        String: <input type="text" name="sometext" string="string"><br><br/>
-        Submit:     <input type="submit" name="done" value="Send">
-    </fieldset>
+
+<form action="Hw.php" method="post">
+    <p><b>Введите ваш отзыв:</b></p>
+    <p><textarea rows="5"  name="text"></textarea></p>
+    <p><input type="submit" value="Отправить"></p>
 </form>
 <?php
